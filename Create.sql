@@ -216,6 +216,19 @@ CREATE TABLE IF NOT EXISTS `Questsystem`.`User_has_Answer` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
+
+ALTER TABLE Circle ADD description varchar(255) AFTER name;
+
+use mysql;
+insert into user(host,user,password,ssl_cipher,x509_issuer,x509_subject)
+     values ('%','ourUsers',password('tomntoms'),'','','');
+     
+insert into user(host,user,password,ssl_cipher,x509_issuer,x509_subject)
+     values ('%','owners',password('tomntoms'),'','','');
+     
+
+     
+USE Questsystem;
 CREATE USER 'ourUsers'@'%' IDENTIFIED BY 'tomntoms';
 GRANT SELECT, INSERT, TRIGGER ON TABLE `Questsystem`.* TO 'ourUsers'@'%';
 

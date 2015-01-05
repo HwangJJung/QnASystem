@@ -1,0 +1,10 @@
+<% data.forEach(function (item,index) { %>
+
+<div class="list-group" type="project" data-value = "<%= item.idProject %>">
+    <div class="list-group-item">
+      <h4 class="list-group-item-heading"><%= item.Name %> </h4>
+      <p class="list-group-item-text"><%= item.User_idMgrUser %></p>
+    </div>
+</div>
+<% }); %>
+<p><a class="btn btn-primary btn-lg" href="#" role="button">하나 만드시겠어요 ?</a></p>
