@@ -216,11 +216,16 @@ CREATE TABLE IF NOT EXISTS `Questsystem`.`User_has_Answer` (
     ON UPDATE NO ACTION)
 ENGINE = InnoDB;
 
-CREATE USER 'ourUser' IDENTIFIED BY 'tomntoms';
-GRANT SELECT, INSERT, TRIGGER ON TABLE `Questsystem`.* TO 'ourUser';
+CREATE USER 'ourUsers'@'%' IDENTIFIED BY 'tomntoms';
+GRANT SELECT, INSERT, TRIGGER ON TABLE `Questsystem`.* TO 'ourUsers'@'%';
 
-CREATE USER 'owner' IDENTIFIED BY 'tomntoms';
-GRANT ALL ON `Questsystem`.* TO 'owner';
+GRANT SELECT, INSERT, TRIGGER ON TABLE `Questsystem`.* TO 'ourUsers'@'localhost';
+
+CREATE USER 'owners'@'%' IDENTIFIED BY 'tomntoms';
+GRANT ALL ON `Questsystem`.* TO 'owners'@'%';
+
+FLUSH PRIVILEGES;
+SHOW GRANTS FOR ourUsers;
 
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;

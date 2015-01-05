@@ -4,9 +4,9 @@
 
 var mysql = require('mysql');
 var pool = mysql.createPool({
-    user: 'ourUser',
+    user: 'root',
     password: 'tomntoms',
-    database: 'QuestionSystem',
+    database: 'QuestSystem',
     connectionLimit:20
 });
 

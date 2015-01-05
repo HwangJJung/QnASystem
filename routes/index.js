@@ -23,21 +23,7 @@ router.get('/login_success', ensureAuthenticated, function(req, res){
     var email  =   req.user._json.email;
     var name  =   req.user._json.name;
 
-    //var statement = 'INSERT INTO user (email, password) VALUES("'+email+'","'+password+'");';
-    //console.log('statement:'+statement);
-    //client.query(statement, function (error, result, fields) {
-    //    if (error) {
-    //        console.log('error:'+error);
-    //        response.redirect('/signup');
-    //    } else {
-    //        if (result) {console.log('result:'+result);}
-    //        response.cookie('logined', true);
-    //        response.redirect('/');
-    //    }
-    //});
-
-    var statement = "IF NOT EXISTS (SELECT idUser from user where idUser = id)" +
-    "INSERT INTO user (??,??,??) VALUES (? , ? , ?) ";
+    var statement = "INSERT INTO user (??,??,??) VALUES (? , ? , ?) ";
     var inserts = ['idUser', 'email','Name', id,email,name];
 
     statement = mysql.format(statement, inserts);
@@ -45,16 +31,27 @@ router.get('/login_success', ensureAuthenticated, function(req, res){
     pool.getConnection(function(error, connection) {
         console.error(error);
         connection.query(statement, function (error) {
-            connection.release();
             if (error) {
                 console.log('error:'+error);
             }
         });
-
+        connection.query("SELECT Name from Circle",function (error, result) {
+            connection.release();
+            if (error) {
+                console.log('error:' + error);
+            }
+            else {
+                if (result) {
+                        console.log('result:' + result);
+                    }
+                res.render('Circles', {
+                    data: result
+                });
+            }
+        });
     });
-   // res.render('users',)
-    res.send(req.user._json);
 });
+
 
 router.get('/logout', function(req, res){
   req.logout();
