@@ -14,3 +14,6 @@ vendor
 # etc
 test
 less
+
+#bower
+bower_components
