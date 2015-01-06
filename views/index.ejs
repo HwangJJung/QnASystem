@@ -2,38 +2,62 @@
 <html lang="kr">
   <head>
     <title><%= title %></title>
-    <link rel='stylesheet' href='/stylesheets/style.css' />
+    <meta charset="utf-8">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="shortcut icon" href="../../assets/ico/favicon.png">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <!-- Bootstrap core CSS -->
+    <link href="stylesheets/bootstrap.css" rel="stylesheet">
+
+    <!-- Custom styles for this template -->
+    <link href="stylesheets/style.css" rel="stylesheet">
   </head>
   <body>
-    <h1><%= title %></h1>
-    <p>Welcome to <%= title %></p>
+  <%- include header.ejs  %>
+  <!-- Main jumbotron for a primary marketing message or call to action -->
+  <div class="jumbotron">
+    <div class="container">
+      <h1>Hello, <%= title %> ! </h1>
+      <p>쉽게 질문하세요. 자세한건 Readme.md</p>
+      <!--<p> <a class="btn btn-primary btn-lg" href="/auth/facebook" data-toggle="modal" data-target="#FBModal">Login with Facebook</a>-->
+
+      <!--</p>-->
+      <p>
+        <a class="btn btn-primary btn-lg" href="/auth/facebook">Login with Facebook</a>
+        <div class="div1"></div>
+      </p>
+    </div>
+  </div>
+
+  <div class="container">
+    <!-- Example row of columns -->
+    <div class="row">
+      <div class="col-lg-4">
+        <h2>이익훈</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+      </div>
+      <div class="col-lg-4">
+        <h2>교수님</h2>
+        <p>Donec id elit non mi porta gravida at eget metus. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus. Etiam porta sem malesuada magna mollis euismod. Donec sed odio dui. </p>
+        <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+      </div>
+      <div class="col-lg-4">
+        <h2>뀨뀨뀨</h2>
+        <p>Donec sed odio dui. Cras justo odio, dapibus ac facilisis in, egestas eget quam. Vestibulum id ligula porta felis euismod semper. Fusce dapibus, tellus ac cursus commodo, tortor mauris condimentum nibh, ut fermentum massa justo sit amet risus.</p>
+        <p><a class="btn btn-default" href="#">View details &raquo;</a></p>
+      </div>
+    </div>
+    <hr>
+
+    <footer>
+      <p>&copy; Hwangjjung 2015</p>
+    </footer>
+  </div> <!-- /container -->
 
 
-    <a href="/auth/facebook">Login with Facebook</a>
-
-    <!--<div-->
-            <!--class="fb-like"-->
-            <!--data-share="true"-->
-            <!--data-width="450"-->
-            <!--data-show-faces="true">-->
-    <!--</div>-->
-
-    <!--<script>-->
-      <!--window.fbAsyncInit = function() {-->
-        <!--FB.init({-->
-          <!--appId      : '1401663623460496',-->
-          <!--xfbml      : true,-->
-          <!--version    : 'v2.2'-->
-        <!--});-->
-      <!--};-->
-
-      <!--(function(d, s, id){-->
-        <!--var js, fjs = d.getElementsByTagName(s)[0];-->
-        <!--if (d.getElementById(id)) {return;}-->
-        <!--js = d.createElement(s); js.id = id;-->
-        <!--js.src = "//connect.facebook.net/en_US/sdk.js";-->
-        <!--fjs.parentNode.insertBefore(js, fjs);-->
-      <!--}(document, 'script', 'facebook-jssdk'));-->
-    <!--</script>-->
+  <%- include footer.ejs %>
+  <script src="javascripts/FBlogin.js"></script>
   </body>
 </html>

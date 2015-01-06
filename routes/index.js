@@ -28,7 +28,7 @@ router.get('/login', function(req, res) {
     res.render('index', { title: 'Express' });
 });
 
-router.get('/auth/facebook', passport.authenticate('facebook', { scope: ['public_profile','email' ]}));
+router.get('/auth/facebook', passport.authenticate('facebook', {display: 'popup', scope: ['public_profile','email' ]}));
 
 router.get('/auth/facebook/callback',
     passport.authenticate('facebook', { successRedirect: '/login_success',
@@ -45,7 +45,7 @@ router.get('/login_success', ensureAuthenticated, function(req, res){
 
                     if (result === null) {
                         var email = req.user._json.email;
-                        var name = req.user._json.name;
+                        var name = "@"+req.user._json.name;
                         statement = "INSERT INTO user (??,??,??) VALUES (? , ? , ?) ";
                         var inserts = ['idUser', 'email', 'Name', id, email, name];
                         statement = mysql.format(statement, inserts);
@@ -58,7 +58,14 @@ router.get('/login_success', ensureAuthenticated, function(req, res){
                 }
             });
             connection.release();
-            res.redirect('/');
+            res.set('Content-Type', 'text/html');
+            res.send("<script type=\"text/javascript\">" +
+            "window.opener.location.href = \'/\'; \n" +
+            " window.close(); " +
+            "</script>"
+            ) ;
+
+            //res.redirect('/');
         }
         else {
             console.error(error);
@@ -121,8 +128,12 @@ router.get('/ajax/project', ensureAuthenticated, function(req, res) {
 router.route('/ajax/topic')
     .get(ensureAuthenticated, function(req, res) {
     pool.getConnection(function(error, connection) {
-        var statement =  "SELECT * from ?? WHERE  ?? = ? ";
-        var inserts = ['topic', 'Project_idProject', req.param('id')];
+        var statement =  "SELECT q.* , u.name " +
+        "from ?? as q " +
+        "join ?? as u " +
+        "on q.?? = u.?? " +
+        "WHERE ?? = ?; ";
+        var inserts = ['Question','User', 'User_idReqUser','idUser', 'Topic_idTopic', req.param('id')];
         statement = mysql.format(statement, inserts);
         console.log(statement);
         connection.query(statement, function(error, result) {
@@ -134,7 +145,8 @@ router.route('/ajax/topic')
                 console.log("result is null");
                 res.render('empty_project.ejs');
             } else {
-                res.render('template_topic.ejs', {
+                console.log(JSON.stringify(result));
+                res.render('template_Question.ejs', {
                     data: result
                 });
             }
