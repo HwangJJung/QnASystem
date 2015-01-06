@@ -30,7 +30,7 @@
 
             <% data.forEach(function (item,index) { %>
 
-            <div class="list-group" type="circle" data-value = "<%= item.idCircle %>">
+            <div class="list-group" type="circle" data-id = "<%= item.idCircle %>">
                 <div class="list-group-item">
                     <h4 class="list-group-item-heading"><%= item.Name %> </h4>
                     <p class="list-group-item-text"><%= item.description %></p>
@@ -42,14 +42,14 @@
     </div>
 
     <!-- Button trigger modal -->
-    <button class="btn btn-primary btn-lg" data-toggle="modal" data-target="#myModal">
-        ADD Something
+    <button class="btn btn-primary btn-lg add" data-type="circle" data-toggle="modal" data-target="#myModal">
+        ADD Circle
     </button>
     <!-- Modal -->
-    <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+    <div class="modal fade" data-type="circle" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
-                <form role="form"  method="get" action="/ajax/topic">
+                <form class ="modal-form" role="form"  method="post" action="/ajax/circle">
                     <div class="modal-header">
                         <button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
                         <h4 class="modal-title">Modal title</h4>
@@ -59,8 +59,8 @@
                         <p>Duis mollis, est non commodo luctus, nisi erat porttitor ligula.</p>
 
                         <div class="form-group">
-                            <label for="exampleInputTitle">Topic title</label>
-                            <input type="text"  class="form-control input_title" placeholder="Title">
+                            <label for="exampleInputTitle">title</label>
+                            <input type="text" name="title"  class="form-control input_title" placeholder="Title">
                         </div>
                         <!--<h4>Popover in a modal</h4>-->
                         <!--<p>This <a href="#" role="button" class="btn btn-default popover-test" title="" data-content="And here's some amazing content. It's very engaging. right?" data-original-title="A Title">button</a> should trigger a popover on click.</p>-->

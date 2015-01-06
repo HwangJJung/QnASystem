@@ -25,7 +25,7 @@ router.get('/', ensureAuthenticated, function(req, res) {
 });
 
 router.get('/login', function(req, res) {
-    res.render('index', { title: 'Express' });
+    res.render('index', { title: 'DB basic' });
 });
 
 router.get('/auth/facebook', passport.authenticate('facebook', {display: 'popup', scope: ['public_profile','email' ]}));
@@ -80,8 +80,12 @@ router.get('/logout', function(req, res){
 
 router.get('/ajax/circle', ensureAuthenticated, function(req, res) {
     pool.getConnection(function(error, connection) {
-        var statement =  "SELECT * from ?? WHERE  ?? = ? ";
-        var inserts = ['Project', 'Circle_idCircle', req.param('id')];
+        var statement =  "SELECT p.* , u.?? " +
+            "from ?? as p " +
+            "join ?? as u " +
+            "on p.?? = u.?? " +
+            "WHERE p.?? = ?; ";
+        var inserts = ['Uname','Project','User','User_idMgrUser','idUser','Circle_idCircle', req.param('id')];
         statement = mysql.format(statement, inserts);
         console.log(statement);
         connection.query(statement, function(error, result) {
@@ -89,8 +93,9 @@ router.get('/ajax/circle', ensureAuthenticated, function(req, res) {
             if (error) {
                 throw error;
             }
-            if(result === null) {
-                console.log("result is null");
+            console.log("rr: " +result[0]);
+
+            if(result[0] === undefined ) {
                 res.render('empty_project.ejs');
             } else {
                 res.render('template_list.ejs', {
@@ -125,15 +130,14 @@ router.get('/ajax/project', ensureAuthenticated, function(req, res) {
     });
 });
 
-router.route('/ajax/topic')
-    .get(ensureAuthenticated, function(req, res) {
+router.get('/ajax/topic', ensureAuthenticated, function(req, res) {
     pool.getConnection(function(error, connection) {
-        var statement =  "SELECT q.* , u.name " +
+        var statement =  "SELECT q.* , u.?? " +
         "from ?? as q " +
         "join ?? as u " +
         "on q.?? = u.?? " +
-        "WHERE ?? = ?; ";
-        var inserts = ['Question','User', 'User_idReqUser','idUser', 'Topic_idTopic', req.param('id')];
+        "WHERE q.?? = ?; ";
+        var inserts = ['Uname','Question','User', 'User_idReqUser','idUser', 'Topic_idTopic', req.param('id')];
         statement = mysql.format(statement, inserts);
         console.log(statement);
         connection.query(statement, function(error, result) {
@@ -152,6 +156,17 @@ router.route('/ajax/topic')
             }
         });
     });
+});
+
+router.post('/ajax/topic', ensureAuthenticated, function(req, res) {
+    console.log('login request : ' + JSON.stringify(req.body));
+
+    var sess = req.session;
+    console.log('ss request : ' + JSON.stringify(sess));
+    console.log('jsonss request : ' + sess);
+    console.log('User : ' +req.user._json.id);
+    res.send("aaaa");
+
 });
 
 
