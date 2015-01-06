@@ -114,10 +114,34 @@ router.get('/ajax/project', ensureAuthenticated, function(req, res) {
                     data: result
                 });
             }
-
         });
     });
 });
+
+router.route('/ajax/topic')
+    .get(ensureAuthenticated, function(req, res) {
+    pool.getConnection(function(error, connection) {
+        var statement =  "SELECT * from ?? WHERE  ?? = ? ";
+        var inserts = ['topic', 'Project_idProject', req.param('id')];
+        statement = mysql.format(statement, inserts);
+        console.log(statement);
+        connection.query(statement, function(error, result) {
+            connection.release();
+            if (error) {
+                throw error;
+            }
+            if(result === null) {
+                console.log("result is null");
+                res.render('empty_project.ejs');
+            } else {
+                res.render('template_topic.ejs', {
+                    data: result
+                });
+            }
+        });
+    });
+});
+
 
 
 //
